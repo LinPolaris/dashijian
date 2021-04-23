@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
     <!-- 引入login.css -->
     <link rel="stylesheet" href="/assets/css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
@@ -17,10 +18,10 @@
         <img src="/assets//images/logo.png" alt="">
     </div>
     <!-- 表单区域 -->
-    <div class="loginAndRegBox">
+    <div class="loginAndRegBox" id="app">
         <div class="title-box"></div>
         <!-- 登录表单 -->
-        <div class="login-box">
+        <div class="login-box" v-show = "!isshow">
             <form class="layui-form" action="" id="form_login">
                 <!-- 用户名 -->
                 <div class="layui-form-item">
@@ -37,14 +38,14 @@
                     <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit>登录</button>
                 </div>
                 <div class="layui-form-item links">
-                    <a href="javascript:;" id="link_reg">去注册</a>
+                    <a href="javascript:;" id="link_reg" @click = "changes">去注册</a>
                 </div>
             </form>
         </div>
         <!-- 注册表单 -->
-        <div class="reg-box" style="display: none;">
+        <div class="reg-box" v-show = "isshow">
             <!-- 注册的表单 -->
-            <form class="layui-form" action="" id="form_reg">
+            <form class="layui-form" action="" id="form_reg" @submit.prevent = "zhuce">
                 <!-- 用户名 -->
                 <div class="layui-form-item">
                     <i class="layui-icon layui-icon-username"></i>
@@ -66,16 +67,38 @@
                     <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit>注册</button>
                 </div>
                 <div class="layui-form-item links">
-                    <a href="javascript:;" id="link_login">去登录</a>
+                    <a href="javascript:;" id="link_login" @click = "changes">去登录</a>
                 </div>
             </form>
         </div>
     </div>
     <!-- 导入layui的js文件 -->
     <script src="/assets/lib/layui/layui.all.js"></script>
+    <script src="/assets/lib/axios.js"></script>
     <script src="/assets/lib/jquery.js"></script>
-    <script src="/assets/js/baseAPI.js"></script>
-    <script src="/assets/js/login.js"></script>
+    <script src="/assets/js/login1.js"></script>
+    <script>
+      var app = new Vue({
+          el: "#app",
+          data: {
+              isshow: false,
+              data: ''
+          },
+          methods: {
+              changes(){
+                  this.isshow = !this.isshow
+              },
+              zhuce(){
+                var data = $('#form_reg').serialize()
+                  var that = this
+                  axios.post('http://api-breakingnews-web.itheima.net/api/reguser',data).then(function(res){
+                      console.log(res.data);
+                      that.changes()
+                  })
+              }
+          }
+      })
+    </script>
 </body>
 
 </html>
