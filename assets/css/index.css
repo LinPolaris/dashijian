@@ -26,11 +26,14 @@ a {
 }
 
 .userinfo {
+    padding: 10px 0;
+    margin-left: -20px;
     height: 60px;
     line-height: 60px;
     text-align: center;
     font-size: 12px;
     user-select: none;
+    background-color: rgba(150, 100, 0, .1);
 }
 
 .layui-side-scroll .userinfo {
@@ -46,7 +49,7 @@ a {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background-color: #009688;
+    background-image: -webkit-linear-gradient(#e66465, #9198e5);
     border-radius: 50%;
     line-height: 40px;
     text-align: center;
@@ -55,4 +58,9 @@ a {
     position: relative;
     top: 4px;
     margin-right: 10px;
+}
+
+#welcome em {
+     font-size: 14px;
+     color: gold;
 }
